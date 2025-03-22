@@ -14,9 +14,9 @@ const askQuestion = (query) => {
 }
 
 const main = async () => {
-  const { UZ_ACCESS_TOKEN } = process.env
+  const { UZ_ACCESS_TOKEN, UZ_USER_ID } = process.env
 
-  const uzClient = new UzClientV3('uk', UZ_ACCESS_TOKEN)
+  const uzClient = new UzClientV3('uk', UZ_ACCESS_TOKEN, undefined, UZ_USER_ID)
 
   if (!UZ_ACCESS_TOKEN) {
     const phoneNumber = await askQuestion('Your phone number: ')
@@ -30,7 +30,7 @@ const main = async () => {
 
   const foundStations = await uzClient.Station.find('льв')
 
-  console.dir(foundStations.data, { depth: 20, colors: true })
+  console.dir(foundStations, { depth: 20, colors: true })
 }
 
 main()

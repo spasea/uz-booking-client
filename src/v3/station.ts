@@ -10,9 +10,10 @@ export default class Station extends Requestable {
    * @param {string} lang - language
    * @param {string} auth
    * @param {string} apiBase - the base UzBooking API URL
+   * @param userId
    */
-  constructor(lang: string, auth: any, apiBase: string) {
-    super(lang, auth, apiBase)
+  constructor(lang: string, auth: any, apiBase: string, userId: number | string) {
+    super(lang, auth, apiBase, false, userId)
     this.lang = lang
   }
 

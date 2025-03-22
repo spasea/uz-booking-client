@@ -8,9 +8,10 @@ export default class Train extends Requestable {
    * @param {auth} [auth] - the credentials to authenticate to UzBoojking. If auth is
    *                                  not provided requests will be made unauthenticated
    * @param {string} [apiBase] - the base UzBooking API URL
+   * @param userId
    */
-  constructor(lang: string, auth: any, apiBase: string) {
-    super(lang, auth, apiBase)
+  constructor(lang: string, auth: any, apiBase: string, userId: number | string) {
+    super(lang, auth, apiBase, false, userId)
   }
 
   /**

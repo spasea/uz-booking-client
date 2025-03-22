@@ -42,6 +42,7 @@ export default class Requestable {
   public apiBase: string
   public auth: string
   public lang: string
+  public userId: string | number
   public METHODS_WITH_NO_BODY = ['GET', 'HEAD', 'DELETE']
 
   /**
@@ -50,12 +51,14 @@ export default class Requestable {
    * @param {Object} [auth] - the credentials to authenticate to Github. If auth is
    *                                  not provided request will be made unauthenticated
    * @param {string} [apiBase] - the base UzBooking API URL
-   * @param {boolen} [langAsApiPrefix] - use language in url as prefix
+   * @param {boolean} [langAsApiPrefix] - use language in url as prefix
+   * @param userId
    */
-  constructor(lang: string, auth: string, apiBase: string, langAsApiPrefix = false) {
+  constructor(lang: string, auth: string, apiBase: string, langAsApiPrefix = false, userId: string | number = 'guest') {
     this.apiBase = `${apiBase}${langAsApiPrefix ? lang + '/' : ''}`
     this.lang = lang
     this.auth = auth
+    this.userId = userId
   }
 
   /**
@@ -101,8 +104,9 @@ export default class Requestable {
       // 'User-Agent':
       //   'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36',
       // 'X-Requested-With': 'XMLHttpRequest'
-      'User-Agent': 'UZ/1.7.3 Android/7.1.2 User/guest',//'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36',
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
       'x-client-locale': this.lang,
+      'x-user-agent': `UZ/2 Web/1 User/${this.userId}`,
     }
 
     return headers

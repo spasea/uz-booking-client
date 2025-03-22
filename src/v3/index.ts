@@ -17,6 +17,7 @@ export default class UZ {
    * @param {string} [auth] - the credentials to authenticate to UzBooking. If auth token is
    *                          not provided requests will be made unauthenticated
    * @param {string} [fcmToken]
+   * @param userId
    * @param {string} [deviceName]
    * @param {string} [apiBase='https://app.uz.gov.ua'] - the base UzBooking API URL
    */
@@ -24,6 +25,7 @@ export default class UZ {
     lang: Language,
     auth?: any,
     fcmToken?: string,
+    userId?: number | string,
     deviceName = 'iPhone12.1',
     apiBase = 'https://app.uz.gov.ua',
   ) {
@@ -40,6 +42,7 @@ export default class UZ {
       _fcmToken,
       deviceName,
       auth,
+      userId,
       this.lang,
       this.apiBase,
     )
@@ -58,7 +61,7 @@ export default class UZ {
    * @returns {Station}
    */
   get Station() {
-    return new Station(this.lang, this.authClient.accessToken, this.apiBase)
+    return new Station(this.lang, this.authClient.accessToken, this.apiBase, this.authClient.userId)
   }
 
   /**
@@ -66,7 +69,7 @@ export default class UZ {
    * @returns {Train}
    */
   get Train() {
-    return new Train(this.lang, this.authClient.accessToken, this.apiBase)
+    return new Train(this.lang, this.authClient.accessToken, this.apiBase, this.authClient.userId)
   }
 
   /**
@@ -74,6 +77,6 @@ export default class UZ {
    * @returns {Wagon}
    */
   get Wagon() {
-    return new Wagon(this.lang, this.authClient.accessToken, this.apiBase)
+    return new Wagon(this.lang, this.authClient.accessToken, this.apiBase, this.authClient.userId)
   }
 }

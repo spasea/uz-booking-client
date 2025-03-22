@@ -14,8 +14,9 @@ export default class Auth extends Requestable {
    * @constructor
    * @param {string} fcmToken
    * @param {string} deviceName
-   * @param {auth} [auth] - the credentials to authenticate to UzBoojking. If auth is
+   * @param {auth} accessToken - the credentials to authenticate to UzBoojking. If auth is
    *                                  not provided requests will be made unauthenticated
+   * @param userId - user id of UZ account
    * @param {Language} [lang] - language
    * @param {string} [apiBase] - the base UzBooking API URL
    */
@@ -23,10 +24,11 @@ export default class Auth extends Requestable {
     fcmToken: string,
     deviceName: string,
     accessToken: string,
-    lang = Language.EN,
+    userId: number | string,
+    lang: Language = Language.EN,
     apiBase: string,
   ) {
-    super(lang, undefined, apiBase)
+    super(lang, undefined, apiBase, false, userId)
 
     this._accessToken = accessToken.replace('Bearer ', '')
     this.fcmToken = fcmToken
@@ -84,6 +86,7 @@ export default class Auth extends Requestable {
 
     if (authResponse) {
       this._accessToken = authResponse.data?.token?.access_token
+      this.userId = authResponse.data?.profile?.id
 
       if (callback) {
         return callback(undefined, authResponse.data?.token, authResponse)
